@@ -25,7 +25,6 @@ INSERT INTO product`(id`, name, category, description, price, weight, image) VAL
 ('','Canned Meat in Broth','Food','Pate','5','',''),
 ('','Canned Flaked Cat Food','Food','Pate','5','',''),
 ('','Canned Shredded Cat Food','Food','Pate','5','',''),
-('','Canned Semi-Moist Cat Food','Pate','5','',''),
 ('','Pouch Stews','Food','Pate','5','',''),
 ('','Pouch Broths','Food','functional foods','14','',''),
 ('','Pouch Supplements','Food','functional foods','17','',''),
@@ -52,8 +51,7 @@ INSERT INTO product`(id`, name, category, description, price, weight, image) VAL
 ('','Antivirals','Medicine','','29','',''),
 ('','Antihistamines','Medicine','31','','',''),
 ('','Anti-emetics','Medicine','','12','',''),
-('','Anti-inflammatory pain relievers','Medicine','','39','',''),
-
+('','Anti-inflammatory pain relievers','Medicine','','39','','')
 
 
 
