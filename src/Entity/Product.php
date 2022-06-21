@@ -81,9 +81,9 @@ class Product
         return $this->Description;
     }
 
-    public function setDescription(string $Decription): self
+    public function setDescription(string $Description): self
     {
-        $this->Description = $Decription;
+        $this->Description = $Description;
 
         return $this;
     }
