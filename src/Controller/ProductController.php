@@ -45,7 +45,37 @@ class ProductController extends AbstractController
             'selectedCat' => $selectedCategory ?: 'Cat'
         ]);
     }
+    /**
+     * @Route("/new", name="app_product_new", methods={"GET", "POST"})
+     */
+    public function new(Request $request, ProductRepository $productRepository): Response
+    {
+        $product = new Product();
+        $form = $this->createForm(ProductType::class, $product);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $productFile = $form->get('Image')->getData();
+            if ($productFile) {
+                try {
+                    $productFile->move(
+                        $this->getParameter('kernel.project_dir') . '/public/images',
+                        $form->get('Name')->getData() . '.JPG'
+                    );
+                } catch (FileException $e) {
+                    print($e);
+                }
+                $product->setImage($form->get('Name')->getData() . '.JPG');
+            }
+            $productRepository->add($product, true);
+            return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('product/new.html.twig', [
+            'product' => $product,
+            'form' => $form,
+        ]);
+    }
 
     /**
      * @Route("/{id}", name="app_product_show", methods={"GET"})
