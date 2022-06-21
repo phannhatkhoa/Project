@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Product;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
+use http\Client\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,44 +20,31 @@ class ProductController extends AbstractController
     /**
      * @Route("/", name="app_product_index", methods={"GET"})
      */
-    public function index(ProductRepository $productRepository): Response
+    public function index(ProductRepository $productRepository, Request $request): Response
     {
-        return $this->render('product/index.html.twig', [
-            'products' => $productRepository->findAll(),
-        ]);
-    }
+        $selectedCategory = $request->query->get('category');
+        $minPrice = $request->query->get('minPrice');
+        $maxPrice = $request->query->get('maxPrice');
 
-    /**
-     * @Route("/new", name="app_product_new", methods={"GET", "POST"})
-     */
-    public function new(Request $request, ProductRepository $productRepository): Response
-    {
-        $product = new Product();
-        $form = $this->createForm(ProductType::class, $product);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $productFile = $form->get('Image')->getData();
-            if ($productFile) {
-                try {
-                    $productFile->move(
-                        $this->getParameter('kernel.project_dir') . '/public/images',
-                        $form->get('Name')->getData() . '.JPG'
-                    );
-                } catch (FileException $e) {
-                    print($e);
-                }
-                $product->setImage($form->get('Name')->getData() . '.JPG');
-            }
-            $productRepository->add($product, true);
-            return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
+        $expressionBuilder = Criteria::expr();
+        $criteria = new Criteria();
+        if (is_null($minPrice) || empty($minPrice)) {
+            $minPrice = 0;
         }
-
-        return $this->renderForm('product/new.html.twig', [
-            'product' => $product,
-            'form' => $form,
+        $criteria->where($expressionBuilder->gte('Price', $minPrice));
+        if (!is_null($maxPrice) && !empty(($maxPrice))) {
+            $criteria->andWhere($expressionBuilder->lte('Price', $maxPrice));
+        }
+        if (!is_null($selectedCategory)) {
+            $criteria->andWhere($expressionBuilder->eq('Category', $selectedCategory));
+        }
+        $filteredList = $productRepository->matching($criteria);
+        return $this->renderForm('product/index.html.twig', [
+            'products' => $filteredList,
+            'selectedCat' => $selectedCategory ?: 'Cat'
         ]);
     }
+
 
     /**
      * @Route("/{id}", name="app_product_show", methods={"GET"})

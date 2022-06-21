@@ -3,43 +3,48 @@
 {% block title %}Product index{% endblock %}
 
 {% block body %}
-    <h1>Product index</h1>
+    <div class="container-md">
+        <div class="row">
+            <div class="col-3">
+                <form action={{ path('app_product_index') }} method="get">
+                    Category:
+                    <select name="category">
+                        <option value="Cat" {{ (selectedCat=="Cat") ? 'selected' }}> Cat</option>
+                        <option value="Food" {{ (selectedCat=="Food") ? 'selected' }}>Food</option>
+                        <option value="Accessory" {{ (selectedCat=="Accessory") ? 'selected' }}>Accessory</option>
+                        <option value="Medicine" {{ (selectedCat=="Medicine") ? 'selected' }} >Medicine</option>
+                    </select><br>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Category</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Weight</th>
-                <th>Image</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for product in products %}
-            <tr>
-                <td>{{ product.id }}</td>
-                <td>{{ product.Name }}</td>
-                <td>{{ product.Category }}</td>
-                <td>{{ product.Description }}</td>
-                <td>{{ product.Price }}</td>
-                <td>{{ product.Weight }}</td>
-                <td>{{ product.Image }}</td>
-                <td>
-                    <a href="{{ path('app_product_show', {'id': product.id}) }}">show</a>
-                    <a href="{{ path('app_product_edit', {'id': product.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_product_new') }}">Create new</a>
+                    Min Price: <input type="number" name="minPrice"><br>
+                    Max Price: <input type="number" name="maxPrice"><br>
+                    <input type="submit" value="Filter" class="btn btn-primary"> |
+                    <a href="{{ path('app_product_index') }}"
+                       class="btn btn-primary">Reset</a>
+                </form>
+            </div>
+            <div class="col-9">
+                <div class="container">
+                    <h4>Product Listing</h4>
+                    <div class="row row-cols-1 row-cols-md-4 g-4">
+                        {% for product in products %}
+                            <div class="col">
+                                <div class="card h-100">
+                                    <img class="card-img-top" src="{{ asset('images/logo.jpg') }}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ product.Name }}</h5>
+                                        <h6 class="card-subtitle">Category: {{ product.category }}</h6>
+                                        <p>Price: {{ product.price }}</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <a href="{{ path('app_product_show', {'id': product.id}) }}"
+                                           class="btn btn-primary">Show</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
