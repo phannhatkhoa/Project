@@ -7,6 +7,7 @@ use App\Form\ProductType;
 use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\Criteria;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,17 +20,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProductController extends AbstractController
 {
     /**
-     * @Route("/", name="app_product_index", methods={"GET"})
+     * @Route("/{pageId}", name="app_product_index", methods={"GET"})
      */
-    public function index(ProductRepository $productRepository, Request $request): Response
+    public function index(LoggerInterface $logger, ProductRepository $productRepository, Request $request, $pageId = 1): Response
     {
         $selectedCategory = $request->query->get('category');
         $minPrice = $request->query->get('minPrice');
         $maxPrice = $request->query->get('maxPrice');
+        $sortBy = $request->query->get('sort');
+        $orderBy = $request->query->get('order');
 
         $expressionBuilder = Criteria::expr();
         $criteria = new Criteria();
-        if (is_null($minPrice) || empty($minPrice)) {
+        if (empty($minPrice)) {
             $minPrice = 0;
         }
         $criteria->where($expressionBuilder->gte('Price', $minPrice));
@@ -39,12 +42,53 @@ class ProductController extends AbstractController
         if (!is_null($selectedCategory)) {
             $criteria->andWhere($expressionBuilder->eq('Category', $selectedCategory));
         }
+        if(!empty($sortBy)){
+            $criteria->orderBy([$sortBy => ($orderBy == 'asc') ? Criteria::ASC : Criteria::DESC]);
+        }
         $filteredList = $productRepository->matching($criteria);
+
+        $numOfItems = $filteredList->count();   // total number of items satisfied above query
+        $itemsPerPage = 8; // number of items shown each page
+        $logger->info($numOfItems);
+        $logger->info($pageId);
+        $filteredList = $filteredList->slice($itemsPerPage * ($pageId - 1), $itemsPerPage);
+
         return $this->renderForm('product/index.html.twig', [
             'products' => $filteredList,
-            'selectedCat' => $selectedCategory ?: 'Cat'
+            'selectedCat' => $selectedCategory ?: 'Cat',
+            'numOfPages' => ceil($numOfItems / $itemsPerPage)
         ]);
     }
+
+//    public function index(ProductRepository $productRepository, Request $request, int $pageId = 1): Response
+//    {
+//        $selectedCategory = $request->query->get('category');
+//        $minPrice = $request->query->get('minPrice');
+//        $maxPrice = $request->query->get('maxPrice');
+//
+//
+//        $expressionBuilder = Criteria::expr();
+//        $criteria = new Criteria();
+//        if (is_null($minPrice) || empty($minPrice)) {
+//            $minPrice = 0;
+//        }
+//        $criteria->where($expressionBuilder->gte('Price', $minPrice));
+//        if (!is_null($maxPrice) && !empty(($maxPrice))) {
+//            $criteria->andWhere($expressionBuilder->lte('Price', $maxPrice));
+//        }
+//        if (!is_null($selectedCategory)) {
+//            $criteria->andWhere($expressionBuilder->eq('Category', $selectedCategory));
+//        }
+//        $filteredList = $productRepository->matching($criteria);
+//        $numOfItems = $filteredList->count();   // total number of items satisfied above query
+//        $itemsPerPage = 8; // number of items shown each page
+//        $filteredList = $filteredList->slice($itemsPerPage * ($pageId - 1), $itemsPerPage);
+//        return $this->renderForm('product/index.html.twig', [
+//            'products' => $filteredList,
+//            'selectedCat' => $selectedCategory ?: 'Cat',
+//            'numOfPages' => ceil($numOfItems / $itemsPerPage)
+//        ]);
+//    }
     /**
      * @Route("/new", name="app_product_new", methods={"GET", "POST"})
      */
