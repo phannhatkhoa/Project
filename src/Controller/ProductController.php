@@ -42,7 +42,7 @@ class ProductController extends AbstractController
         if (!is_null($selectedCategory)) {
             $criteria->andWhere($expressionBuilder->eq('Category', $selectedCategory));
         }
-        if(!empty($sortBy)){
+        if (!empty($sortBy)) {
             $criteria->orderBy([$sortBy => ($orderBy == 'asc') ? Criteria::ASC : Criteria::DESC]);
         }
         $filteredList = $productRepository->matching($criteria);
@@ -89,8 +89,9 @@ class ProductController extends AbstractController
 //            'numOfPages' => ceil($numOfItems / $itemsPerPage)
 //        ]);
 //    }
+
     /**
-     * @Route("/new", name="app_product_new", methods={"GET", "POST"})
+     * @Route("/create/new", name="app_product_new", methods={"GET", "POST"})
      */
     public function new(Request $request, ProductRepository $productRepository): Response
     {
@@ -122,7 +123,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="app_product_show", methods={"GET"})
+     * @Route("/show/{id}", name="app_product_show", methods={"GET"})
      */
     public function show(Product $product): Response
     {
