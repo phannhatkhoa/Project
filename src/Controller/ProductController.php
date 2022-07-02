@@ -161,6 +161,7 @@ class ProductController extends AbstractController
     public function index(LoggerInterface $logger, ProductRepository $productRepository, Request $request, $pageId = 1): Response
     {
         $selectedCategory = $request->query->get('category');
+        $Name = $request->query->get('name');
         $minPrice = $request->query->get('minPrice');
         $maxPrice = $request->query->get('maxPrice');
         $sortBy = $request->query->get('sort');
@@ -177,6 +178,11 @@ class ProductController extends AbstractController
         }
         if (!is_null($selectedCategory)) {
             $criteria->andWhere($expressionBuilder->eq('Category', $selectedCategory));
+        }
+        if (!is_null($Name) && !empty(($Name))) {
+            $criteria->andWhere($expressionBuilder->contains('Name', $Name));
+//            $criteria->orWhere($expressionBuilder->contains('description', $Name));
+
         }
         if (!empty($sortBy)) {
             $criteria->orderBy([$sortBy => ($orderBy == 'asc') ? Criteria::ASC : Criteria::DESC]);

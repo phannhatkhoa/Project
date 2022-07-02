@@ -7,6 +7,9 @@
         <div class="row">
             <div class="col-3">
                 <form action={{ path('app_product_index') }} method="get">
+                    <input type="string" name="name" class="form-control rounded mb-4"
+                           placeholder="What are you looking for?" aria-label="Search"
+                           aria-describedby="search-addon"/>
                     Category:
                     <select name="form-check">
                         <option value="Cat" {{ (selectedCat=="Cat") ? 'selected' }}> Cat</option>
