@@ -237,20 +237,20 @@ class ProductController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/sendmail", name="app_user_sendmail", methods={"GET"})
-     */
-    public function sendmail(Swift_Mailer $mailer): Response
-    {
-        $message = (new Swift_Message('Hello Email'))
-            ->setFrom('ldd392002@gmail.com')
-            ->setTo('duyle392002@gmail.com')
-            ->setSubject("Test send mail by Yudle")
-            ->setBody("Test mail for shop cat");
-
-        $mailer->send($message);
-        return new Response("Send mail successfully");
-    }
+//    /**
+//     * @Route("/ss/sendmail", name="app_user_sendmail", methods={"GET"})
+//     */
+//    public function sendmail(Swift_Mailer $mailer): Response
+//    {
+//        $message = (new Swift_Message('Hello Email'))
+//            ->setFrom('ldd392002@gmail.com')
+//            ->setTo('duyle392002@gmail.com')
+//            ->setSubject("Test send mail by Yudle")
+//            ->setBody("Test mail for shop cat");
+//
+//        $mailer->send($message);
+//        return new Response("Send mail successfully");
+//    }
 
     /**
      * @Route("/show/{id}", name="app_product_show", methods={"GET"})
