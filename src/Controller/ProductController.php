@@ -14,6 +14,8 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
 use Psr\Log\LoggerInterface;
+use Swift_Mailer;
+use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -238,9 +240,9 @@ class ProductController extends AbstractController
     /**
      * @Route("/sendmail", name="app_user_sendmail", methods={"GET"})
      */
-    public function sendmail(\Swift_Mailer $mailer): Response
+    public function sendmail(Swift_Mailer $mailer): Response
     {
-        $message = (new \Swift_Message('Hello Email'))
+        $message = (new Swift_Message('Hello Email'))
             ->setFrom('ldd392002@gmail.com')
             ->setTo('duyle392002@gmail.com')
             ->setSubject("Test send mail by Yudle")
