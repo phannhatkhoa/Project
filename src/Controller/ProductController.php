@@ -193,7 +193,7 @@ class ProductController extends AbstractController
         $itemsPerPage = 8; // number of items shown each page
         $logger->info($numOfItems);
         $logger->info($pageId);
-        $filteredList = $filteredList->slice($itemsPerPage * ($pageId - 1), $itemsPerPage);
+        $filteredList = $filteredList->slice((int)$itemsPerPage * ((int)$pageId - 1), (int)$itemsPerPage);
 
         return $this->renderForm('product/index.html.twig', [
             'products' => $filteredList,
