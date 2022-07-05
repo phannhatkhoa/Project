@@ -1,30 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Illuminati Shop{% endblock %}
+{% block title %}Product index{% endblock %}
 
 {% block body %}
     <div class="container-md">
+        <div class="col ">
+            <form action={{ path('app_product_index') }} method="get">
+                Category:
+                {#                    <select name="check">#}
+                {#                        <option value="Cat"{{ (selectedCat=="Cat") ? 'selected' }}> Cat</option>#}
+                {#                        <option value="Food"{{ (selectedCat=="Food") ? 'selected' }}>Food</option>#}
+                {#                        <option value="Accessory"{{ (selectedCat=="Accessory") ? 'selected' }}>Accessory</option>#}
+                {#                        <option value="Medicine"{{ (selectedCat=="Medicine") ? 'selected' }} >Medicine</option>#}
+                {#                    </select><br>#}
+                {#                    <div>#}
+                {#                        <label>#}
+                {#                            <input type="checkbox" value="Cat"{{ (selectedCat=="Cat") ? 'selected' }}> Cat#}
+                {#                        </label>#}
+                {#                    </div>#}
+                {#                    <div>#}
+                {#                        <label>#}
+                {#                            <input type="checkbox"value="Food"{{ (selectedCat=="Food") ? 'selected' }}> Food#}
+                {#                        </label>#}
+                {#                    </div>#}
+                <a type="checkbox" href="{{ path(app.request.attributes.get('_route'),
+                    app.request.query.all|merge({'sort': 'Category', 'order': 'Food'})) }}"
+                >Food </a><br>
+                Min Price: <input type="number" name="minPrice"><br>
+                Max Price: <input type="number" name="maxPrice"><br>
+                <input type="submit" name="selectedCat" value="Filter" class="btn btn-primary"> |
+                <a href="{{ path('app_product_index') }}"
+                   class="btn btn-primary">Reset</a>
+            </form>
+        </div>
         <div class="row">
-            <div class="col-3">
-                <form action={{ path('app_product_index') }} method="get">
-                    <input type="string" name="name" class="form-control rounded mb-4"
-                           placeholder="What are you looking for?" aria-label="Search"
-                           aria-describedby="search-addon"/>
-                    Category:
-                    <select name="form-check">
-                        <option value="Cat" {{ (selectedCat=="Cat") ? 'selected' }}> Cat</option>
-                        <option value="Food" {{ (selectedCat=="Food") ? 'selected' }}>Food</option>
-                        <option value="Accessory" {{ (selectedCat=="Accessory") ? 'selected' }}>Accessory</option>
-                        <option value="Medicine" {{ (selectedCat=="Medicine") ? 'selected' }} >Medicine</option>
-                    </select><br>
-                    Min Price: <input type="number" name="minPrice"><br>
-                    Max Price: <input type="number" name="maxPrice"><br>
-                    <input type="submit" value="Filter" class="btn btn-primary"> |
-                    <a href="{{ path('app_product_index') }}"
-                       class="btn btn-primary">Reset</a>
-                </form>
-            </div>
-            <div class="col-9">
+            <div class="col">
                 <div class="container">
                     <div class="row">
                         <div class="col-6"><h4>Product Listing</h4></div>
@@ -37,40 +47,41 @@
                                 app.request.query.all|merge({'sort': 'Price', 'order': 'asc'})) }}"
                                class="btn btn-primary btn-sm">Low->High</a>
                         </div>
-                        <div class="row row-cols-1 row-cols-md-4 g-4">
+                        <div class="row row-cols-1 row-cols-md-3 g-3">
                             {% for product in products %}
                                 <div class="col">
-                                    <div class="card h-100">
+                                        <div class="card card-height-10rem btn" ><a class="text-black list-group-item text-decoration-none text-wrap" href="{{ path('app_product_show', {'id': product.id}) }}">
                                         <img class="card-img-top" src="{{ asset('/public/images/') }}">
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{ product.Name }}</h5>
+                                        <div class="card-body h-100 w-100 fs-5 text-wrap"style="width: 8rem;,height: 8rem;">
+                                            <h5 class="card-title h-100 w-100 fs-5 text-wrap" style="width: 8rem;">{{ product.Name }}</h5>
                                             <h6 class="card-subtitle">Category: {{ product.category }}</h6>
                                             <p>Price: {{ product.price }}</p>
                                         </div>
-                                        <div class="card-footer">
-                                            <a href="{{ path('app_add_cart', {'id': product.id}) }}" class="btn btn-primary">Add</a>
-                                            <a href="{{ path('app_product_show', {'id': product.id}) }}"
-                                               class="btn btn-primary">Show</a>
+                                        <div class="card">
+                                            <a href="{{ path('app_add_cart', {'id': product.id}) }}" class="btn btn-primary d-flex flex-wrap justify-content-center">Add</a>
+{#                                            <a href="{{ path('app_product_show', {'id': product.id}) }}"#}
+{#                                               class="btn btn-primary">Show</a>#}
                                         </div>
                                     </div>
+                                    </a>
                                 </div>
                             {% endfor %}
-                            <div class="row mt-2">
-                                <div style="display:flex;text-align:center;justify-content:center">
-                                    <nav aria-label="Page navigation">
-                                        <ul class="pagination">
-                                            {% for i in range(1, numOfPages) %}
-                                                {% set style = app.request.get('pageId')==i ? "active" : "" %}
-                                                <li class="page-item {{ style }}">
-                                                    <a class="page-link"
-                                                       href={{ path(app.request.attributes.get('_route'),
-                                                        app.request.query.all|merge({'pageId': i})) }}>{{ i }}
-                                                    </a>
-                                                </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </nav>
-                                </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div style="display:flex;text-align:center;justify-content:center">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination">
+                                        {% for i in range(1, numOfPages) %}
+                                            {% set style = app.request.get('pageId')==i ? "active" : "" %}
+                                            <li class="page-item {{ style }}">
+                                                <a class="page-link"
+                                                   href={{ path(app.request.attributes.get('_route'),
+                                                    app.request.query.all|merge({'pageId': i})) }}>{{ i }}
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </nav>
                             </div>
                         </div>
                     </div>
