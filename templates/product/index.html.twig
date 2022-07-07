@@ -51,7 +51,7 @@
                             {% for product in products %}
                                 <div class="col">
                                         <div class="card card-height-10rem btn" ><a class="text-black list-group-item text-decoration-none text-wrap" href="{{ path('app_product_show', {'id': product.id}) }}">
-                                        <img class="card-img-top" src="{{ asset('/public/images/') }}">
+                                        <img class="card-img-top" src="{{ asset('/public/images') }}">
                                         <div class="card-body h-100 w-100 fs-5 text-wrap"style="width: 8rem;,height: 8rem;">
                                             <h5 class="card-title h-100 w-100 fs-5 text-wrap" style="width: 8rem;">{{ product.Name }}</h5>
                                             <h6 class="card-subtitle">Category: {{ product.category }}</h6>

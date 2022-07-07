@@ -162,6 +162,18 @@ class ProductController extends AbstractController
      */
     public function index(LoggerInterface $logger, ProductRepository $productRepository, Request $request, $pageId = 1): Response
     {
+//        //        $this->denyAccessUnlessGranted('ROLE_USER');
+//        $hasAccess = $this->isGranted('ROLE_USER');
+//        if ($hasAccess) {
+//            return $this->render('product/index.html.twig', [
+//                'products' => $productRepository->findAll(),
+//            ]);
+//        } else {
+//            return $this->render('product/index.html.twig', [
+//                'products' => [],
+//            ]);
+//        }
+
         $selectedCategory = $request->query->get('category');
         $Name = $request->query->get('name');
         $minPrice = $request->query->get('minPrice');
