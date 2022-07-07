@@ -231,7 +231,7 @@ class ProductController extends AbstractController
             if ($productFile) {
                 try {
                     $productFile->move(
-                        $this->getParameter('kernel.project_dir') . '/public/images',
+                        $this->getParameter('kernel.project_dir') . '/public/images/',
                         $form->get('Name')->getData() . '.JPG'
                     );
                 } catch (FileException $e) {
