@@ -210,7 +210,7 @@ class ProductController extends AbstractController
         $logger->info($pageId);
         $filteredList = $filteredList->slice((int)$itemsPerPage * ((int)$pageId - 1), (int)$itemsPerPage);
 
-        return $this->renderForm('  product/index.html.twig', [
+        return $this->renderForm('product/index.html.twig', [
             'products' => $filteredList,
             'selectedCat' => $selectedCategory ?: 'Cat',
             'numOfPages' => ceil($numOfItems / $itemsPerPage)
@@ -231,7 +231,7 @@ class ProductController extends AbstractController
             if ($productFile) {
                 try {
                     $productFile->move(
-                        $this->getParameter('kernel.project_dir') . '/public/images',
+                        $this->getParameter('kernel.project_dir') . 'images/',
                         $form->get('Name')->getData() . '.JPG'
                     );
                 } catch (FileException $e) {
