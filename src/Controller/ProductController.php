@@ -14,8 +14,8 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
 use Psr\Log\LoggerInterface;
-//use Swift_Mailer;
-//use Swift_Message;
+use Swift_Mailer;
+use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -82,19 +82,19 @@ class ProductController extends AbstractController
         }
         return $this->redirectToRoute('app_product_index'); //means 200, successful
     }
-//    /**
-//     * @Route("/sendmail", name="app_user_sendmail", methods={"GET"})
-//     */
-//    public function sendmail(Swift_Mailer $mailer): Response
-//    {
-//        $message = (new Swift_Message('Hello Email'))
-//            ->setFrom('ldd392002@gmail.com')
-//            ->setTo('duyle392002@gmail.com')
-//            ->setBody("3rd Test send email");
-//
-//        $mailer->send($message);
-//        return new Response("Send mail successfully");
-//    }
+    /**
+     * @Route("/sendmail", name="app_user_sendmail", methods={"GET"})
+     */
+    public function sendmail(Swift_Mailer $mailer): Response
+    {
+        $message = (new Swift_Message('Hello Email'))
+            ->setFrom('ldd392002@gmail.com')
+            ->setTo('duyle392002@gmail.com')
+            ->setBody("3rd Test send email");
+
+        $mailer->send($message);
+        return new Response("Send mail successfully");
+    }
 
     /**
      * @Route("/reviewCart", name="app_review_cart", methods={"GET"})

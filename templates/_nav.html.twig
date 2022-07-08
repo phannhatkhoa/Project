@@ -2,19 +2,19 @@
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
         <a href="{{ path('app_product_index') }}"
            class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-            <img class="card-img-top" src="{{ asset('/images/DSK.jpg')}}">
+            <img class="card-img-top" src="{{ asset('/images/DSK.jpg' )}} " style="width: 8rem;,height: 8rem;" >
             <span class="text-inline justify-content-center">DSK-Shop</span>
         </a>
         <form class="m-auto" action={{ path('app_product_index') }} method="get">
             <div class="input-group justify-content-center m-auto">
-                    <button class="input-group-text pm-3 py-0" id="basic-addon1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="purple"
-                             class="bi bi-search" viewBox="0 0 16 16">
-                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                        </svg></button>
-                        <input type="string" name="name" class="form-control"
-                               placeholder="Search Product" aria-label="Search"
-                               aria-describedby="search-addon"/>
+                <button class="input-group-text pm-3 py-0" id="basic-addon1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="purple"
+                         class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg></button>
+                <input type="string" name="name" class="form-control"
+                       placeholder="Search Product" aria-label="Search"
+                       aria-describedby="search-addon"/>
             </div>
         </form>
         <ul class="nav nav-pills">

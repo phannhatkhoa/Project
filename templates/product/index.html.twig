@@ -57,8 +57,9 @@
                     <input name="category" type="checkbox" value="Medicine"{{ (selectedCat=="Medicine") ? 'Medicine' }}>Medicine
                 </label>
                 <br>
-                Min Price: <input type="number" name="minPrice"><br>
-                Max Price: <input type="number" name="maxPrice"><br>
+                Min Price: <input type="number" name="minPrice"></br>
+                <br>
+                Max Price: <input type="number" name="maxPrice"></br>
                 <input type="submit" name="selectedCat" value="Filter" class="btn btn-primary"> |
                 <a href="{{ path('app_product_index') }}"
                    class="btn btn-primary">Reset</a>
