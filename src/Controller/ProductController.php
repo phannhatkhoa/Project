@@ -62,7 +62,7 @@ class ProductController extends AbstractController
     /**
      * @Route("/addCart/{id}", name="app_add_cart", methods={"GET"})
      */
-    public function addCart(Product $product, Request $request)
+    public function addCart(Product $product, Request $request): Response
     {
         $session = $request->getSession();
         $quantity = (int)$request->query->get('quantity');
@@ -70,17 +70,30 @@ class ProductController extends AbstractController
         //check if cart is empty
         if (!$session->has('cartElements')) {
             //if it is empty, create an array of pairs (prod Id & quantity) to store first cart element.
-            $cartElements = array($product->getId() => $quantity);
+            $cartElements = array($product->getId() => $quantity * ($quantity + 1));
             //save the array to the session for the first time.
             $session->set('cartElements', $cartElements);
         } else {
             $cartElements = $session->get('cartElements');
             //Add new product after the first time. (would UPDATE new quantity for added product)
-            $cartElements = array($product->getId() => $quantity) + $cartElements;
+            $cartElements = array($product->getId() => $quantity * ($quantity + 1)) + $cartElements;
             //Re-save cart Elements back to session again (after update/append new product to shopping cart)
             $session->set('cartElements', $cartElements);
         }
-        return new Response(); //means 200, successful
+        return $this->redirectToRoute('app_product_index'); //means 200, successful
+    }
+    /**
+     * @Route("/sendmail", name="app_user_sendmail", methods={"GET"})
+     */
+    public function sendmail(Swift_Mailer $mailer): Response
+    {
+        $message = (new Swift_Message('Hello Email'))
+            ->setFrom('ldd392002@gmail.com')
+            ->setTo('duyle392002@gmail.com')
+            ->setBody("3rd Test send email");
+
+        $mailer->send($message);
+        return new Response("Send mail successfully");
     }
 
     /**
@@ -162,18 +175,6 @@ class ProductController extends AbstractController
      */
     public function index(LoggerInterface $logger, ProductRepository $productRepository, Request $request, $pageId = 1): Response
     {
-//        //        $this->denyAccessUnlessGranted('ROLE_USER');
-//        $hasAccess = $this->isGranted('ROLE_USER');
-//        if ($hasAccess) {
-//            return $this->render('product/index.html.twig', [
-//                'products' => $productRepository->findAll(),
-//            ]);
-//        } else {
-//            return $this->render('product/index.html.twig', [
-//                'products' => [],
-//            ]);
-//        }
-
         $selectedCategory = $request->query->get('category');
         $Name = $request->query->get('name');
         $minPrice = $request->query->get('minPrice');
@@ -209,13 +210,12 @@ class ProductController extends AbstractController
         $logger->info($pageId);
         $filteredList = $filteredList->slice((int)$itemsPerPage * ((int)$pageId - 1), (int)$itemsPerPage);
 
-        return $this->renderForm('product/index.html.twig', [
+        return $this->renderForm('  product/index.html.twig', [
             'products' => $filteredList,
             'selectedCat' => $selectedCategory ?: 'Cat',
             'numOfPages' => ceil($numOfItems / $itemsPerPage)
         ]);
     }
-
 
     /**
      * @Route("/create/new", name="app_product_new", methods={"GET", "POST"})
@@ -231,7 +231,7 @@ class ProductController extends AbstractController
             if ($productFile) {
                 try {
                     $productFile->move(
-                        $this->getParameter('kernel.project_dir') . '/public/images/',
+                        $this->getParameter('kernel.project_dir') . '/public/images',
                         $form->get('Name')->getData() . '.JPG'
                     );
                 } catch (FileException $e) {
@@ -249,21 +249,6 @@ class ProductController extends AbstractController
         ]);
     }
 
-//    /**
-//     * @Route("/ss/sendmail", name="app_user_sendmail", methods={"GET"})
-//     */
-//    public function sendmail(Swift_Mailer $mailer): Response
-//    {
-//        $message = (new Swift_Message('Hello Email'))
-//            ->setFrom('ldd392002@gmail.com')
-//            ->setTo('duyle392002@gmail.com')
-//            ->setSubject("Test send mail by Yudle")
-//            ->setBody("Test mail for shop cat");
-//
-//        $mailer->send($message);
-//        return new Response("Send mail successfully");
-//    }
-
     /**
      * @Route("/show/{id}", name="app_product_show", methods={"GET"})
      */
@@ -279,7 +264,7 @@ class ProductController extends AbstractController
      */
     public function edit(Request $request, Product $product, ProductRepository $productRepository): Response
     {
-        $form = $this->createForm(ProductType::class, $product);
+        $form = $this->createForm(ProductType::class, $product,array("no_edit" => true));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
