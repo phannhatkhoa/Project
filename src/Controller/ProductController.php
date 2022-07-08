@@ -248,7 +248,6 @@ class ProductController extends AbstractController
             'form' => $form,
         ]);
     }
-
     /**
      * @Route("/show/{id}", name="app_product_show", methods={"GET"})
      */
