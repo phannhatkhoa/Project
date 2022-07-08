@@ -70,13 +70,13 @@ class ProductController extends AbstractController
         //check if cart is empty
         if (!$session->has('cartElements')) {
             //if it is empty, create an array of pairs (prod Id & quantity) to store first cart element.
-            $cartElements = array($product->getId() => $quantity * ($quantity + 1));
+            $cartElements = array($product->getId() => $quantity  + 1);
             //save the array to the session for the first time.
             $session->set('cartElements', $cartElements);
         } else {
             $cartElements = $session->get('cartElements');
             //Add new product after the first time. (would UPDATE new quantity for added product)
-            $cartElements = array($product->getId() => $quantity * ($quantity + 1)) + $cartElements;
+            $cartElements = array($product->getId() => ($quantity + 1)) + $cartElements;
             //Re-save cart Elements back to session again (after update/append new product to shopping cart)
             $session->set('cartElements', $cartElements);
         }
