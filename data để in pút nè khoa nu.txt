@@ -1,5 +1,5 @@
-INSERT INTO product`(id`, name, category, description, price, weight, image) VALUES 
-('','British Shorthair','Cat','','450','',''),
+INSERT INTO product`(id, name, category, description, price, weight, image) VALUES 
+('1','British Shorthair','Cat','','450','',''),
 ('','Norwegian Forest Cat','Cat','','850','',''),
 ('','Japanese Bobtail','Cat','','680','',''),
 ('','Persian','Cat','','780','',''),
