@@ -57,14 +57,17 @@
                     <input name="category" type="checkbox" value="Medicine"{{ (selectedCat=="Medicine") ? 'Medicine' }}>Medicine
                 </label>
                 <br>
-                Min Price: <input type="number" name="minPrice"></br>
-                <br>
-                Max Price: <input type="number" name="maxPrice"></br>
+                Min Price: <input type="number" name="minPrice"><br>
+                Max Price: <input type="number" name="maxPrice"><br>
                 <input type="submit" name="selectedCat" value="Filter" class="btn btn-primary"> |
                 <a href="{{ path('app_product_index') }}"
                    class="btn btn-primary">Reset</a>
             </form>
         </div>
+        {% if app.user=="ROLE_ADMIN" %}
+            <div class="mx-auto w-4/5 my-8 btn btn-primary"><a href="{{ path('app_product_new') }}" class="text-white">
+                    Create new product</a></div>
+        {% endif %}
         <div class="row">
             <div class="col">
                 <div class="container">
@@ -85,9 +88,9 @@
                                     <div class="card card-height-10rem btn"><a
                                                 class="text-black list-group-item text-decoration-none text-wrap"
                                                 href="{{ path('app_product_show', {'id': product.id}) }}">
-                                            {#                                            <img class="card-img-top" src="{{ asset('public/images/'~product.Image) }}">#}
+                                            {#                                            <img class="card-img-top" src="{{ asset('public/images/'~product.Image) }}"> #}
 
-                                            <img class="card-img-top" src="{{asset('images/'~product.Image) }}">
+                                            <img class="card-img-top" src="{{ asset('images/'~product.Image) }}">
 
                                             <div class="card-body h-100 w-100 fs-5 text-wrap"
                                                  style="width: 8rem;,height: 8rem;">

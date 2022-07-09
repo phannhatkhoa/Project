@@ -4,43 +4,48 @@
 
 {% block body %}
     <h1>Product</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ product.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>{{ product.Name }}</td>
-            </tr>
-            <tr>
-                <th>Category</th>
-                <td>{{ product.Category }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ product.Description }}</td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td>{{ product.Price }}</td>
-            </tr>
-            <tr>
-                <th>Weight</th>
-                <td>{{ product.Weight }}</td>
-            </tr>
-            <tr>
-                <th>Image</th>
-                <td>{{ product.Image }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_product_index') }}">back to list</a>
-
-    <a href="{{ path('app_product_edit', {'id': product.id}) }}">edit</a>
-
-    {{ include('product/_delete_form.html.twig') }}
+    <div class="d-flex justify-content-center">
+        <div class="row">
+            <img class="card" src="{{asset('images/'~product.Image) }}" style="width: 30rem;">
+            <table class="row">
+                <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ product.id }}</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td>{{ product.Name }}</td>
+                </tr>
+                <tr>
+                    <th>Category</th>
+                    <td>{{ product.Category }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ product.Description }}</td>
+                </tr>
+                <tr>
+                    <th>Price</th>
+                    <td>{{ product.Price }}</td>
+                </tr>
+                <tr>
+                    <th>Weight</th>
+                    <td>{{ product.Weight }}</td>
+                </tr>
+                {#            <tr>#}
+                {#                <th>Image</th>#}
+                {#                <td>{{ product.Image }}</td>#}
+                {#            </tr>#}
+                </tbody>
+            </table>
+            <ul>
+                <a class="btn btn-primary " href="{{ path('app_add_cart', {'id': product.id}) }}">Add Product To Cart</a><br>
+            </ul>
+            <ul>
+                <a class="btn btn-primary" href="{{ path('app_product_index') }}">Back To Main Page</a>
+            </ul>
+        </div>
+    </div>
+    {#    {{ include('product/_delete_form.html.twig') }}#}
 {% endblock %}
