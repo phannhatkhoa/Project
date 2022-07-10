@@ -19,9 +19,7 @@
             </div>
         </form>
         <ul class="nav nav-pills">
-            <li class="nav-item"><a href="{{ path('app_product_index') }}" class="nav-link" aria-current="page">Home</a>
-            </li>
-            <li class="nav-item"><a href="mailto:duyle392002@gmail.com" class="nav-link">About</a></li>
+            <li class="nav-item"><a href="mailto:duyle392002@gmail.com" class="nav-link">Contact Us</a></li>
             <li class="nav-item"><a href="{{ path('app_product_index') }}" class="nav-link">Products</a></li>
             {% if app.user %}
                 <li class="nav-item"><a class="nav-link" href="{{ path('app_user_show', {'id': app.user.id}) }}">Hello {{ app.user.email }}</a></li>
