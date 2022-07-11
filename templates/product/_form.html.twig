@@ -13,8 +13,9 @@
     <label for="product_weight" class="form-label">Weight</label>
     {{ form_widget(form.Weight,{'attr':{'class':'form-control rounded-pill'}}) }}
     <label for="product_image" class="form-label">Image</label>
+    {{ form_row(form.Image) }}
+    <button class="form-control rounded-pill btn btn-lg btn-primary border-bottom">{{ button_label|default('Save') }}</button>
     <br>
     {{ form_end(form) }}
-    <button class="form-control rounded-pill btn btn-lg btn-primary border-bottom">{{ button_label|default('Save') }}</button>
 </div>
 
