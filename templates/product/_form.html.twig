@@ -1,4 +1,20 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+
+<div class="container-md col-md-4 col-md-offset-4">
+    <h1>Edit Product</h1>
+    {{ form_start(form,{'attr':{'class':'form-control'}}) }}
+    <label for="product_name" class="form-label">Name</label>
+    {{ form_widget(form.Name,{'attr':{'class':'form-control rounded-pill'}}) }}
+    <label for="product_category" class="form-label">Category</label>
+    {{ form_widget(form.Category,{'attr':{'class':'form-control rounded-pill'}}) }}
+    <label for="product_description" class="form-label">Description</label>
+    {{ form_widget(form.Description,{'attr':{'class':'form-control rounded-pill'}}) }}
+    <label for="product_price" class="form-label">Price</label>
+    {{ form_widget(form.Price,{'attr':{'class':'form-control rounded-pill'}}) }}
+    <label for="product_weight" class="form-label">Weight</label>
+    {{ form_widget(form.Weight,{'attr':{'class':'form-control rounded-pill'}}) }}
+    <label for="product_image" class="form-label">Image</label>
+    <br>
+    {{ form_end(form) }}
+    <button class="form-control rounded-pill btn btn-lg btn-primary border-bottom">{{ button_label|default('Save') }}</button>
+</div>
+
