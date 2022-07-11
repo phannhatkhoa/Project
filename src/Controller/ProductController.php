@@ -169,6 +169,15 @@ class ProductController extends AbstractController
         } else
             return new Response("Nothing in cart to checkout!");
     }
+    /**
+     * @Route("/manage", name="app_product_manage", methods={"GET"})
+     */
+    public function manage(ProductRepository $productRepository): Response
+    {
+        return $this->render('product/mangeproduct.html.twig', [
+            'products' => $productRepository->findAll(),
+        ]);
+    }
 
     /**
      * @Route("/{pageId}", name="app_product_index", methods={"GET"})
@@ -263,7 +272,7 @@ class ProductController extends AbstractController
      */
     public function edit(Request $request, Product $product, ProductRepository $productRepository): Response
     {
-        $form = $this->createForm(ProductType::class, $product,array("no_edit" => true));
+        $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -289,4 +298,7 @@ class ProductController extends AbstractController
 
         return $this->redirectToRoute('app_product_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
 }
+

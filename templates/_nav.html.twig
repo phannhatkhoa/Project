@@ -38,5 +38,42 @@
                 </a>
             </li>
         </ul>
+        <br>
+        {% if is_granted('ROLE_ADMIN') %}
+
+            <ul class="nav nav-pills">
+                <li class="nav-item"><p class="nav-link" style="color: black;background-color: white">Manage: </p>
+                </li>
+                <li class="nav-item">
+                    {% if app.request.get('_route') == 'app_user_index' %}
+                <li class="nav-item"><a href="{{ path('app_user_index') }}" class="nav-link active"
+                                        style="color: red;">User</a></li>
+                {% else %}
+                    <li class="nav-item"><a href="{{ path('app_user_index') }}" class="nav-link"
+                                            style="color: red;">User</a></li>
+                {% endif %}
+                </li>
+                <li class="nav-item">
+                    {% if app.request.get('_route') == 'app_product_manage' %}
+                <li class="nav-item"><a href="{{ path('app_product_manage') }}" class="nav-link active"
+                                        style="color: red;">Product</a></li>
+            {% else %}
+                <li class="nav-item"><a href="{{ path('app_product_manage') }}" class="nav-link"
+                                        style="color: red;">Product</a></li>
+                {% endif %}
+                </li>
+{#                <li class="nav-item">#}
+{#                    {% if app.request.get('_route') == 'app_brand_index' %}#}
+{#                <li class="nav-item"><a href="{{ path('app_brand_index') }}" class="nav-link active"#}
+{#                                        style="color: white;">Brand</a></li>#}
+{#            {% else %}#}
+{#                <li class="nav-item"><a href="{{ path('app_brand_index') }}" class="nav-link" style="color: white;">Brand</a>#}
+{#                </li>#}
+{#                {% endif %}#}
+{#                </li>#}
+
+            </ul>
+        {% endif %}
+        </br>
     </header>
 </div>
