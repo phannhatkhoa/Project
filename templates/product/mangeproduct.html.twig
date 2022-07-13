@@ -27,9 +27,9 @@
                 <td>{{ product.weight }}</td>
                 <td>{{ product.image }}</td>
                 <td>
-                    <a href="{{ path('app_product_show', {'id': product.id}) }}">show</a>
-                    <a href="{{ path('app_product_edit', {'id': product.id}) }}">edit</a>
-                </td>
+                    <a href="{{ path('app_product_show', {'id': product.id}) }}">Show</a>
+                    <a href="{{ path('app_product_edit', {'id': product.id}) }}">Edit</a>
+                    {{ include('product/_delete_form.html.twig') }}
             </tr>
         {% else %}
             <tr>

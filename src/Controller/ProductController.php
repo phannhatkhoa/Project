@@ -180,7 +180,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/{pageId}", name="app_product_index", methods={"GET"})
+     * @Route("/{pageId }", name="app_product_index", methods={"GET"})
      */
     public function index(LoggerInterface $logger, ProductRepository $productRepository, Request $request, $pageId = 1): Response
     {

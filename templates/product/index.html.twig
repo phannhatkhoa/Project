@@ -7,42 +7,6 @@
         <div class="col ">
             <form action={{ path('app_product_index') }} method="get">
                 Category:
-                {#                                    <select name="check"> #}
-                {#                                        <option value="Cat"{{ (selectedCat=="Cat") ? 'selected' }}> Cat</option> #}
-
-
-                {#                                        <option value="Food"{{ (selectedCat=="Food") ? 'selected' }}>Food</option> #}
-                {#                                        <option value="Accessory"{{ (selectedCat=="Accessory") ? 'selected' }}>Accessory</option> #}
-                {#                                        <option value="Medicine"{{ (selectedCat=="Medicine") ? 'selected' }} >Medicine</option> #}
-                {#                                    </select><br> #}
-                {#                                    <div> #}
-                {#                                        <label> #}
-                {#                                            <input type="checkbox" value="Cat"{{ (selectedCat=="Cat") ? 'selected' }}> Cat #}
-                {#                                        </label> #}
-                {#                                    </div> #}
-
-                {#                <label> #}
-                {#                    <input name="category" type="checkbox"value="Cat"{{ (selectedCat=="cat") ? 'cat' }}> Cat #}
-                {#                </label> #}
-                {#                <label> #}
-                {#                    <input name="category" type="checkbox"value="food"{{ (selectedCat=="Food") ? 'food' }}> Food #}
-                {#                </label> #}
-                {#                <label> #}
-                {#                    <input name="category" type="checkbox"value="Accessory"{{ (selectedCat=="Accessory") ? 'Accessory' }}>Accessory #}
-                {#                </label> #}
-                {#                <label> #}
-                {#                    <input name="category" type="checkbox"value="Medicine"{{ (selectedCat=="Medicine") ? 'Medicine' }}>Medicine #}
-                {#                </label> #}
-
-
-                {#                                    <div> #}
-                {#                                        <label> #}
-                {#                                            <input type="checkbox"value="Food"{{ (selectedCat=="Food") ? 'selected' }}> Food #}
-                {#                                        </label> #}
-                {#                                    </div> #}
-                <a type="checkbox" href="{{ path(app.request.attributes.get('_route'),
-                    app.request.query.all|merge({'sort': 'Category', 'order': 'Food'})) }}"
-                ></a><br>
                 <label>
                     <input name="category" type="checkbox" value="Cat"{{ (selectedCat=="cat") ? 'cat' }}> Cat
                 </label>
@@ -50,12 +14,16 @@
                     <input name="category" type="checkbox" value="food"{{ (selectedCat=="Food") ? 'food' }}> Food
                 </label>
                 <label>
-                    <input name="category" type="checkbox"
-                           value="Accessory"{{ (selectedCat=="Accessory") ? 'Accessory' }}>Accessory
+                    <input name="category" type="checkbox" value="Accessory"{{ (selectedCat=="Accessory") ? 'Accessory' }}>Accessory
                 </label>
                 <label>
                     <input name="category" type="checkbox" value="Medicine"{{ (selectedCat=="Medicine") ? 'Medicine' }}>Medicine
                 </label>
+{#                <select name="category">#}
+{#                    <option value="Medicine" {{ (selectedCat=="Medicine") }}>Medicine</option>#}
+{#                    <option value="Cat" {{ (selectedCat=="cat") }}>Medicine</option>#}
+{#                </select>#}
+
                 <br>
                 Min Price: <input type="number" name="minPrice"><br>
                 Max Price: <input type="number" name="maxPrice"><br>
